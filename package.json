@@ -1,12 +1,12 @@
 {
-  "name": "webhook-echo-sample",
-  "version": "1.0.0",
-  "description": "Webhook echo sample",
+  "name": "webhook-echo-sample3",
+  "version": "1.0.3",
+  "description": "Webhook echo sample3",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
-  "author": "Sunil Syal",
+  "author": "Ashwin Katkar",
   "dependencies": {
     "body-parser": "^1.15.0",
     "express": "^4.13.4"
