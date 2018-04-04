@@ -126,7 +126,7 @@ restService.post("/echo", function (req, res) {
 
   });
 
-restService.listen(process.env.PORT || 8005, function () {
+restService.listen(process.env.PORT || 8000, function () {
     console.log("Server Running");
 });
 
