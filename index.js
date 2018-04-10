@@ -111,7 +111,7 @@ restService.post("/echo", function (req, res) {
 
       return res.json({
           speech: result,
-          //displayText: result,
+          displayText: result,
           source: "wms"
       });
 
