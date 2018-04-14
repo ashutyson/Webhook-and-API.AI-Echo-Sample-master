@@ -90,8 +90,16 @@ restService.post("/echo", function (req, res) {
           //result = speech+ " ,"+ json.value[0].CompanyName;
           // result = speech + " ," + json.CompanyName;
 
-         
-          result =body ;
+          if(speech=="Start"||speech=="START"||speech=="Start Picking")
+          {
+               result =body ;
+               result+="\n Select Order Number To Pick";
+                   
+          }
+          else{
+              result =body ;
+          }
+
           
          
           
@@ -112,6 +120,7 @@ restService.post("/echo", function (req, res) {
       return res.json({
           speech: result,
           displayText: result,
+          expect_user_response: false,
           source: "wms"
       });
 
@@ -127,7 +136,7 @@ restService.post("/echo", function (req, res) {
 
   });
 
-restService.listen(process.env.PORT || 8005, function () {
+restService.listen(process.env.PORT || 8000, function () {
     console.log("Server Running");
 });
 
