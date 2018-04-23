@@ -35,12 +35,12 @@ restService.post("/echo", function (req, res) {
       : "Noconfirmvalue";
 
 
-  var  speech =
-      req.body.result &&
-      req.body.result.parameters &&
-      req.body.result.parameters.echoText
-        ? req.body.result.parameters.echoText
-        : "Wrong";
+    var  speech =
+        req.body.result &&
+        req.body.result.parameters &&
+        req.body.result.parameters.echoText
+          ? req.body.result.parameters.echoText
+          : "Wrong";
 
     var param =
     req.body.result &&
@@ -53,26 +53,26 @@ restService.post("/echo", function (req, res) {
     // const url = "http://services.odata.org/V3/Northwind/Northwind.svc/Customers('" + speech + "')?$format=json";
 
     
-   // const url="https://mdcs0014121431trial.hanatrial.ondemand.com/ChatBotProject/services/order.xsjs"
-    //const url = `https://mdcs0014121431trial.hanatrial.ondemand.com/ChatBotProject/services/orderitems.xsjs?ToNum=${speech}`;
-    //let url = `https://mdcs0014121431trial.hanatrial.ondemand.com/ChatBotProject/services/orderitems.xsjs?ToNum=${x}`
-   // const url = `https://mdcs0014121431trial.hanatrial.ondemand.com/ChatBotProject/services/orderitems.xsjs?ToNum=${speech}`
+    // const url="http://208.85.249.167:8000/ChatBotProject/services/order.xsjs"
+    //const url = `http://208.85.249.167:8000/ChatBotProject/services/orderitems.xsjs?ToNum=${speech}`;
+    //let url = `http://208.85.249.167:8000/ChatBotProject/services/orderitems.xsjs?ToNum=${x}`
+    // const url = `http://208.85.249.167:8000/ChatBotProject/services/orderitems.xsjs?ToNum=${speech}`
 
     if(param=="Noparam" && confirmvalue=="Noconfirmvalue" && ordernum=="Noordernum")
     {
-         url="https://mdcs0014121431trial.hanatrial.ondemand.com/ChatBotProject/services/order.xsjs"
-       // const url = `https://mdcs0014121431trial.hanatrial.ondemand.com/ChatBotProject/services/orderitems.xsjs?ToNum=${param}`
+        url="http://208.85.249.167:8000/ChatBotProject/services/order.xsjs"
+        // const url = `http://208.85.249.167:8000/ChatBotProject/services/orderitems.xsjs?ToNum=${param}`
     }
 
     else if(param!="Noparam" && confirmvalue=="Noconfirmvalue" && ordernum=="Noordernum")
     {
-        url = `https://mdcs0014121431trial.hanatrial.ondemand.com/ChatBotProject/services/orderitems.xsjs?ToNum=${param}`
+        url = `http://208.85.249.167:8000/ChatBotProject/services/orderitems.xsjs?ToNum=${param}`
     }
     else 
     {
         if(confirmvalue=="yes"||confirmvalue=="Yes"||confirmvalue=="YES")
         {
-            url=`https://mdcs0014121431trial.hanatrial.ondemand.com/ChatBotProject/services/orderconfirm.xsjs?ToNum=${ordernum}`
+            url=`http://208.85.249.167:8000/ChatBotProject/services/orderconfirm.xsjs?ToNum=${ordernum}`
             
         }
         else{
@@ -83,61 +83,60 @@ restService.post("/echo", function (req, res) {
 
    
 
-  request.get(url, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        //  let json = JSON.parse(body);
-          //console.log(" city :" + json.value[0].CompanyName);
-          //result = speech+ " ,"+ json.value[0].CompanyName;
-          // result = speech + " ," + json.CompanyName;
+    request.get(url, function (error, response, body) {
+       
+        if (!error && response.statusCode == 200) {
+            //  let json = JSON.parse(body);
+            //console.log(" city :" + json.value[0].CompanyName);
+            //result = speech+ " ,"+ json.value[0].CompanyName;
+            // result = speech + " ," + json.CompanyName;
 
-          if(speech=="Start"||speech=="START"||speech=="Start Picking")
-          {
-               result =body ;
-               result+="\n Select Order Number To Pick";
-                   
-          }
-          else{
-              result =body ;
-          }
-
-          
+         
+            result =body ;
+            if(result=="You do not seem to have any active Orders!")
+            {
+                var a =false;
+            }
+            else{
+                var a =true;
+            }
          
           
          
-      }
-      else
-      {
-          if(cresult!="")
-          {
-              result=cresult;
-          }
-          else{
-              result = "No data";
-          }
+        }
+        else
+        {
+            if(cresult!="")
+            {
+                result=cresult;
+                var a =true;
+            }
+            else{
+                result = "No data";
+                var a =false;
+            }
           
-      }
+        }
 
-      return res.json({
-          speech: result,
-          displayText: result,
-          expect_user_response: false,
-          source: "wms"
-      });
+        return res.json({
+            speech: result,
+            displayText: result,
 
-      //return ({
-      //    speech: result,
-      //    displayText: result,
-      //    source: "wms"
-      //});
+            data: {
+                google: {
+                    expect_user_response: a
+                
+                }
+            },
+            source: "wms"
+        });
 
-  });
+    });
 
   
 
-  });
-
-restService.listen(process.env.PORT || 8000, function () {
-    console.log("Server Running");
 });
 
-
+restService.listen(process.env.PORT || 8005, function () {
+    console.log("Server Running");
+});
